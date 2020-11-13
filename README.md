@@ -156,10 +156,10 @@ Answer the following questions to fill in the blanks:
 
 - _Which file do you update to make Ansible run the playbook on a specific machine? 
 How do I specify which machine to install the ELK server on versus which to install Filebeat on?
-The file you need to update is the filebeat-config.yml file which is a configuration file that will be dropped into the Elk-Server during the run of the ansible-playbook. 
-When you update the host.cfg file in the ansible directory you will need to create a new group called [elkservers] and add the Private IP of the Elk-Server to the group. 
-Then when configuring the filebeat-config.yml file you need to designate the Private IP of the Elk-Server in two lines of the .yml file. 
-Lines 1106 and 1806 are the needed to be updated with the Private IP.
+  - We need to update is the filebeat-config.yml file which is a configuration file that will be dropped into the Elk-Server during the run of the ansible-playbook. 
+  - Update the hosts file in the ansible directory you will need to create a new group called [elkservers] and add the Private IP of the Elk-Server to the group. 
+  - Then when configuring the filmetricbeat-config.yml file you need to designate the Private IP of the Elk-Server. 
+
 
 - Which URL do you navigate to in order to check that the ELK server is running?
 The Elk-Server is running is the Public IP:port 5601 (0.0.0.0:5601)
