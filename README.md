@@ -190,3 +190,33 @@ open a new web browser
 ![Metricbeat Dashboard](Images/MetricbeatKibanaDashboard.png)
 
 
+
+
+
+<h1>Azure Portal Screenshots</h1>
+
+<h2>Azure Portal Homepage</h2>
+
+![Azure Portal Home](Images/Home_Microsoft_Azure_Portal.png)
+
+<h2>Virtual Machines</h2>
+
+![Virtual Machines](Images/Virtual_machines_Microsoft_Azure.png)
+
+<h2>Azure Resource Group</h2>
+
+![Resource Groups](Images/Resource_groups_Microsoft_Azure.png)
+
+<h2>Azure Portal Jump box Network Rules</h2>
+
+![Jump Box Network Rules](Images/Jump-Box-Provisioner_Network_Rules.png)
+
+<h2>Azure Portal ELK Server Network Rules</h2>
+
+![ELK Server Network Rules](Images/Elk-VM_NetworkRules.png)
+
+
+
+
+
+
