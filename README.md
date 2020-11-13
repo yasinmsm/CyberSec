@@ -2,7 +2,7 @@
 
 The files in this repository were used to configure the network depicted below.
 
-[Network Diagram](Images/Network Diagram.png)
+! [Network Diagram](Images/NetworkDiagram.png)
 
 
 These files have been tested and used to generate a live ELK deployment on Azure. They can be used to either recreate the entire deployment pictured above. Alternatively, select portions of the Playbook YAML file may be used to install only certain pieces of it, such as Filebeat.
@@ -51,12 +51,14 @@ Integrating an ELK server allows users to easily monitor the vulnerable VMs for 
 
 The configuration details of each machine may be found below.
 
-| Name | Function | IP Address | Operating System |
-|-|-|-|-|
-| Jump Box |  | 10.0.0.3 | Ubuntu Linux |
-| Web-1 | DVWA Container | 10.0.0.3 | Ubuntu Linux |
-| Web-2 | DVWA Container | 10.0.0.3 | Ubuntu Linux |
-| Elk-Server | ELK | 10.0.0.3 | Ubuntu Linux |
+| Name          	| Function       	| IP Address 	| Operating System 	|
+|---------------	|----------------	|------------	|------------------	|
+| Jump Box      	| Jump Box       	| 10.0.0.4   	| Ubuntu Linux     	|
+| Load Balancer 	| Load Balancer  	| Private IP 	|                  	|
+| Web-1         	| DVWA Container 	| 10.0.0.5   	| Ubuntu Linux     	|
+| Web-2         	| DVWA Container 	| 10.0.0.6   	| Ubuntu Linux     	|
+| Elk-Server    	| ELK            	| 10.2.0.4   	| Ubuntu Linux     	|
+
 
 ### Access Policies
 
@@ -72,47 +74,119 @@ Machines within the network can only be accessed by SSH.
 
 A summary of the access policies in place can be found in the table below.
 
-| Name     | Publicly Accessible | Allowed IP Addresses |
-|----------|---------------------|----------------------|
-| Jump Box | Yes/No              | 10.0.0.1 10.0.0.2    |
-|          |                     |                      |
-|          |                     |                      |
+| Name       	| Publicly Accessable 	| Allowed IP              	|
+|------------	|---------------------	|-------------------------	|
+| Jump Box   	| No                  	| Personal IP Only        	|
+| Web-1      	| No                  	| 10.0.0.4                	|
+| Web-2      	| No                  	| 10.0.0.4                	|
+| Elk-Server 	| No                  	| Personal IP &  10.0.0.4 	|
+
 
 ### Elk Configuration
 
 Ansible was used to automate configuration of the ELK machine. No configuration was performed manually, which is advantageous because...
-- _TODO: What is the main advantage of automating configuration with Ansible?_
+- What is the main advantage of automating configuration with Ansible?
+  - Open Source tool
+  - Easy to use
+  - Easily configure multiple servers
+  - Enables automation
+  - Powerful & Flexible
+  
 
 The playbook implements the following tasks:
-- _TODO: In 3-5 bullets, explain the steps of the ELK installation play. E.g., install Docker; download image; etc._
-- ...
-- ...
+- The steps of the ELK installation play. E.g., install Docker; download image; etc._
+  - Create New VM
+  - Configure Inbound and outbound security rules
+  - Download and configure Docker
+  - Configure elk-playbook.yml
+  - Configure Host file
+  - Execute playbook 
+  - Launch Container
+  - Attach to Container
+  - Launch browser and access KIBANA site.
+
+  ![Elk Paybook YAML](Playbooks/elk-playbook.yml)
+
+
+  ![Kibana Browser](Images/KibanaBrowserPage.png)
+
 
 The following screenshot displays the result of running `docker ps` after successfully configuring the ELK instance.
 
-![TODO: Update the path with the name of your screenshot of docker ps output](Images/docker_ps_output.png)
+![Filebeat Execution Resuslts](Images/FilebeatplaybookExecution.png)
+
+![Metricbeat Execution Resuslts](Images/MetricbeatPlaybookExecution.png)
 
 ### Target Machines & Beats
 This ELK server is configured to monitor the following machines:
-- _TODO: List the IP addresses of the machines you are monitoring_
+- This ELK server is configured to monitor the following machines:
+    - [10.0.0.5] 
+    - [10.0.0.5]
 
 We have installed the following Beats on these machines:
-- _TODO: Specify which Beats you successfully installed_
+  - Filebeat 
+  - Metricbeat
 
 These Beats allow us to collect the following information from each machine:
-- _TODO: In 1-2 sentences, explain what kind of data each beat collects, and provide 1 example of what you expect to see. E.g., `Winlogbeat` collects Windows logs, which we use to track user logon events, etc._
+  - Filebeat:
+      - Filebeatis a lightweight shipper for forwarding and centralizing log data. 
+      - Filebeat monitors log files or locations 
+      - Filebeat collects log events, 
+      - Filebeat forwards logs to Elasticsearch or Logstash for indexing.
+
+
+  - Metricbeat:
+    - Metricbeat collects metrics from the operating system logs
+    - Metricbeat collects event logs from services running on the server
+    - Metricbeat then takes the metrics and statistics that it collects and ships them to Kibana
+
 
 ### Using the Playbook
 In order to use the playbook, you will need to have an Ansible control node already configured. Assuming you have such a control node provisioned: 
 
-SSH into the control node and follow the steps below:
-- Copy the _____ file to _____.
-- Update the _____ file to include...
-- Run the playbook, and navigate to ____ to check that the installation worked as expected.
+SSH into the ELK-Server  and follow the steps below:
+- Copy the filebeat-config.yml and metricbat-config.yml files to /etc/ansible/roles/files/  .
+- Update the above configuration files to add the IP addressand ports
+- Run the playbook, and navigate to the browser to check that the installation worked as expected.
 
-_TODO: Answer the following questions to fill in the blanks:_
-- _Which file is the playbook? Where do you copy it?_
-- _Which file do you update to make Ansible run the playbook on a specific machine? How do I specify which machine to install the ELK server on versus which to install Filebeat on?_
-- _Which URL do you navigate to in order to check that the ELK server is running?
+Answer the following questions to fill in the blanks:
+- _Which file is the playbook? Where do you copy it?
+    - The filebeat playbook is filebeat-playbook.yml. 
+    - The host file is in  "/etc/ansible/hosts/" directory.
 
-_As a **Bonus**, provide the specific commands the user will need to run to download the playbook, update the files, etc._
+- _Which file do you update to make Ansible run the playbook on a specific machine? 
+How do I specify which machine to install the ELK server on versus which to install Filebeat on?
+The file you need to update is the filebeat-config.yml file which is a configuration file that will be dropped into the Elk-Server during the run of the ansible-playbook. 
+When you update the host.cfg file in the ansible directory you will need to create a new group called [elkservers] and add the Private IP of the Elk-Server to the group. 
+Then when configuring the filebeat-config.yml file you need to designate the Private IP of the Elk-Server in two lines of the .yml file. 
+Lines 1106 and 1806 are the needed to be updated with the Private IP.
+
+- Which URL do you navigate to in order to check that the ELK server is running?
+The Elk-Server is running is the Public IP:port 5601 (0.0.0.0:5601)
+
+
+The following commands were used to run the Ansible configuration for the Elk-Server. Ensure all files are properly placed before running the ansible-playbooks.
+
+Connect to Jump box
+  - ssh RedAdmin@JumpBox(PrivateIP)
+Once in jumpbox
+  List all containers
+  - sudo docker container list -a
+  - sudo docker start container (container name)
+  - sudo docker attach container (container name)
+You will be attached to the container
+  - cd /etc/ansible/
+  - ansible-playbook elk.yml 
+  (configures Elk-Server and starts the Elk container on the Elk-Server) 
+
+  - cd /etc/ansible/roles/
+  - ansible-playbook filebeat-playbook.yml 
+  - ansible-playbook metricbeat-playbook.yml
+
+open a new web browser 
+  goto http://(Elk-Server PublicIP:5601) 
+  This will bring up the Kibana Web Portal
+
+![Metricbeat Dashboard](Images/MetricbeatKibanaDashboard.png)
+
+
